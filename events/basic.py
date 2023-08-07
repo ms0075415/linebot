@@ -35,7 +35,7 @@ Hello! 您好，歡迎您成為 Master Finance的好友!
 def push_msg(event, msg):
     try:
         user_id = event.source.user_id
-        line_bot_api.push_message(room_id, TextSendMessage(text=msg))
+        line_bot_api.push_message(user_id, TextSendMessage(text=msg))
     except:
         room_id = event.source.room_id
         line_bot_api.push_message(room_id, TextSendMessage(text=msg))
