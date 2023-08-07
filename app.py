@@ -1,6 +1,7 @@
 #載入LineBot所需要的套件
 from line_bot_api import *
-from events.basic import*
+from events.basic import *
+from events.oil import *
 
 app = Flask(__name__)
 
@@ -26,12 +27,18 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     message_text = str(event.message.text).lower()
-
+   
+############################使用說明 選單 油價查詢############################
     if message_text == '@使用說明':
         about_us_event(event)
         Usage(event)
 
-    
+    if event.message.text == "想知道油價":
+        content = oil_price()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+
 #     message = TextSendMessage(text=event.message.text)
 #     line_bot_api.reply_message(event.reply_token, message) #回覆你輸入的訊息(重複你說的話)
 
