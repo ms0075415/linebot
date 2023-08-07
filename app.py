@@ -31,11 +31,12 @@ def handle_message(event):
         about_us_event(event)
         Usage(event)
 
-    if event.message.text == "@小幫手":
+    if event.message.text == "@使用說明":
         buttons_template = TemplateSendMessage(
             alt_text='小幫手 template',
             template=ButtonsTemplate(
                 title = '請選擇服務',
+                text = '請選擇',
                 thumbnail_image_url='https://i.imgur.com/GIVVWxG.jpg',
                 actions = [
                     MessageTemplateAction(
