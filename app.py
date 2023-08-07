@@ -4,12 +4,6 @@ from events.basic import*
 
 app = Flask(__name__)
 
-#Channel access token #在line Developers的providers的Basic settings
-line_bot_api = LineBotApi('cnaDYjmpA18litOws+4t7x/j/PJXiiZJhhrkkYokCf+V0MyQXbeANnpb4A3pwOsBXy5ZqU4MmkK0+RgWPcdMpUnU4vVvWxNUDxplTFmn22oTMXObi4SoM7VugLAnEhz4iLFad39QjB0IDUK8M+94pQdB04t89/1O/w1cDnyilFU=')
-
-#Channel secret  #在line Developers的providers的Messaging API
-handler = WebhookHandler('d5d1d84e419c4bcfa7d6a092a6de9339')
-
 #監聽所有來自callback的 Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -35,6 +29,7 @@ def handle_message(event):
 
     if message_text == '@使用說明':
         about_us_event(event)
+        Usage(event)
 
 #     message = TextSendMessage(text=event.message.text)
 #     line_bot_api.reply_message(event.reply_token, message) #回覆你輸入的訊息(重複你說的話)
