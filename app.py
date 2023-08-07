@@ -43,8 +43,9 @@ def handle_message(event):
         
 ############################ 使用說明 選單 股票看板 ############################
     if event.message.text == "股價查詢":
-        line_bot_api.push_message(uid, TextSendMessage("請輸入 #加股票代號...."))
-        
+        line_bot_api.push_message(uid, TextSendMessage("👉請輸入\
+                                                       \n #加股票代號...."))
+
 ############################ 粉絲/封鎖 訊息狀態 ############################
 
 @handler.add(FollowEvent)
