@@ -31,7 +31,7 @@ def handle_message(event):
         about_us_event(event)
         Usage(event)
 
-    if event.message.text == "@使用說明":
+    if event.message.text == "@小幫手":
         buttons_template = TemplateSendMessage(
             alt_text='小幫手 template',
             template=ButtonsTemplate(
