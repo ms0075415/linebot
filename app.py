@@ -38,6 +38,27 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
+        
+############################ 粉絲/封鎖 訊息狀態 ############################
+
+@handler.add(FollowEvent)
+def handle_follow(event):
+    welcome_msg = """Hello! 您好，歡迎您成為Master Finance的好友!
+
+我是Master財經小幫手
+
+-這裡有股票、匯率資訊唷~
+-直接點選下方【圖中】選單功能
+
+-期待您的光臨!"""
+
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=welcome_msg))
+    
+@handler.add(UnfollowEvent)
+def handle_unfollow(event):
+    print(event)
 
 #     message = TextSendMessage(text=event.message.text)
 #     line_bot_api.reply_message(event.reply_token, message) #回覆你輸入的訊息(重複你說的話)
