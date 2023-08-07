@@ -41,7 +41,7 @@ def push_msg(event, msg):
         line_bot_api.push_message(room_id, TextSendMessage(text=msg))
 
 def Usage(event):
-    push_msg(event, "  🔎🔎查詢方法🔎🔎  \
+    push_msg(event, "  🔎🔎 查 詢 方 法 🔎🔎  \
                     \n\
                     \n⭐小幫手可以查詢⭐\
                     \n ☑油價☑匯率☑股價\
