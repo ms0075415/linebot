@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 
 # Authentication Database認證資料庫
-stockDB='testdb'
+stockDB='mydb'
 dbname = 'test-good1'
 
 
