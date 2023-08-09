@@ -41,6 +41,6 @@ def getExchangeRate(msg): #不同貨幣直接換算(非只限於台幣)
     jData = res.json()
     pd_currency = jData['data']['rates']
     content = f'目前的兌換匯率為:{pd_currency[currency1]} {currency1} \n查詢的金額為: '
-    amount = float(pd_currency[currency])
+    amount = float(pd_currency[currency1])
     content += str('%.2f' % (amount*float(money_value))) + " "+currency1
     return content
