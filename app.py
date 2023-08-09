@@ -111,9 +111,9 @@ def handle_message(event):
     if re.match('幣別種類', emsg):
         message = show_Button()
         line_bot_api.reply_message(event.reply_token, message)
-        
-    if re.match("換匯[A-Z]{3}/[A-Z{3}]", msg):
-        line_bot_api.push_message(uid, TextSendMessage("將為您做外匯計算....."))
+
+    if re.match("換匯[A-Z]{3}/[A-Z{3}]",msg):
+        line_bot_api.push_message(uid,TextSendMessage("將為您做外匯計算...."))
         content = getExchangeRate(msg)
         line_bot_api.push_message(uid, TextSendMessage(content))
 
