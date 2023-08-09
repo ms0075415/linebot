@@ -64,15 +64,17 @@ def handle_message(event):
     #新增使用者關注的股票到mongodb
     if re.match('關注[0-9]{4}[<>][0-9]', msg): #使用者新增股票至股票清單
         stockNumber = msg[2:6]
+        line_bot_api.push_message(uid, TextSendMessage("加入股票代號"+stockNumber))
         content = write_my_stock(uid, user_name, stockNumber, msg[6:7], msg[7:1])
         line_bot_api.push_message(uid, TextSendMessage(content))
-    else:
-        content = write_my_stock(uid, user_name, stockNumber, "未設定", "未設定")
-        line_bot_api.push_message(uid, TextSendMessage(content))
         return 0
+    # else:
+    #     content = write_my_stock(uid, user_name, stockNumber, "未設定", "未設定")
+    #     line_bot_api.push_message(uid, TextSendMessage(content))
+    #     return 0
 
-    if(emsg.startswith('#')):
-            text = emsg[1:]
+    if(msg.startswith('#')):
+            text = msg[1:]
             content = ''
 
             stock_rt = twstock.realtime.get(text)
