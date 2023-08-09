@@ -5,7 +5,7 @@ import requests
 
 # Authentication Database認證資料庫
 stockDB='mydb'
-dbname = 'howard-good31'
+dbname = 'test-good1'
 
 
 def constructor_stock():
