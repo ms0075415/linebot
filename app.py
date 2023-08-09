@@ -52,9 +52,10 @@ def handle_message(event):
         line_bot_api.push_message(uid, TextSendMessage("請輸入#加股票代號...."))
     
     #股價查詢
-    if re.match("想知道股價", msg):
-        stockNumber = msg[2:6]
-        btn_msg = stock_reply_other(stockNumber)
+    if re.match("想知道股價[0-9]", msg):
+        #stockNumber = msg[5:9]
+        msg = msg[5:]
+        btn_msg = stock_reply_other(msg)
         line_bot_api.push_message(uid, btn_msg)
         return 0
     if(emsg.startswith('#')):
