@@ -55,15 +55,15 @@ def handle_message(event):
     
     #股價查詢
     if re.match("想知道股價[0-9]", msg):
-        #stockNumber = msg[5:9]
-        msg = msg[5:]
-        btn_msg = stock_reply_other(msg)
+        stockNumber = msg[5:9]
+        # = msg[5:]
+        btn_msg = stock_reply_other(stockNumber)
         line_bot_api.push_message(uid, btn_msg)
         return 0
     
     #新增使用者關注的股票到mongodb
     if re.match('關注[0-9]{4}[<>][0-9]', msg): #使用者新增股票至股票清單
-        stockNumber = msg[2:6]
+        stockNumber = msg[2:]
         line_bot_api.push_message(uid, TextSendMessage("加入股票代號"+stockNumber))
         content = write_my_stock(uid, user_name, stockNumber, msg[6:7], msg[7:])
         line_bot_api.push_message(uid, TextSendMessage(content))
@@ -73,8 +73,8 @@ def handle_message(event):
     #     line_bot_api.push_message(uid, TextSendMessage(content))
     #     return 0
 
-    if(msg.startswith('#')):
-            text = msg[1:]
+    if(emsg.startswith('#')):
+            text = emsg[1:]
             content = ''
 
             stock_rt = twstock.realtime.get(text)
