@@ -37,7 +37,9 @@ def show_Button():
         "text": "💵  幣  別  種  類  💵",
         "weight": "bold",
         "size": "xl",
-        "color": "#AA2B1D"
+        "color": "#AA2B1D",
+        "margin": "none",
+        "style": "italic"
       }
     ]
   },
