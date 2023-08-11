@@ -168,6 +168,7 @@ def handle_message(event):
                     line_bot_api.push_message(userID, TextSendMessage(text=content))
         def job():
             print('HH')
+            line_bot_api.push_message(uid, TextSendMessage("快買股票喔!"))
             dataList = cache_users_stock()
             #print(dataList)
             for i in range(len(dataList)):
@@ -183,12 +184,6 @@ def handle_message(event):
         while True:
             schedule.run_pending()
             time.sleep(1)
-
-
-
-
-
-
 
 ############################ 匯率區 ############################
     if re.match('幣別種類', emsg):
