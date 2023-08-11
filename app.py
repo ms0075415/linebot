@@ -149,7 +149,7 @@ def handle_message(event):
             url = 'https://tw.stock.yahoo.com/q/q?s=' + stock
             list_req = requests.get(url)
             soup = BeautifulSoup(list_req.content, "html.parser")
-            getstock = soup.findAll('b')[1].text
+            getstock = soup.findAll('span')[11].text
             content = stock +"當前股市價為: " +getstock
             if condition == '<':
                 content += "\n篩選條件為: <" + price
@@ -175,7 +175,7 @@ def handle_message(event):
                 for k in range(len(dataList[i])):
                     #print(dataList[i][k])
                     look_stock_price(dataList[i][k]['favorite_stock'], dataList[i][k]['condition'], dataList[i][k]['price'], dataList[i][k]['userID'])
-        schedule.every(30).seconds.do(job).tag('daily-task-stock'+uid, 'second') #每10秒執行一次
+        schedule.every(30).seconds.do(job).tag('daily-task-stock'+uid, 'second') #每30秒執行一次
         #schedule.every().hour.do(job) #每小時執行一次
         #schedule.every().day.at("17:19").do(job) #每天9點30執行一次
         #schedule.every().monday.do(job) #每周執行一次
