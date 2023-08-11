@@ -156,54 +156,94 @@ def handle_message(event):
         line_bot_api.push_message(uid, TextSendMessage(content))
 
 ############################ 股價提醒 ############################
-    if re.match("關閉提醒", msg):
-        import schedule
-        schedule.clear()
     if re.match("股價提醒", msg):
-        import  schedule
-        import time
+            line_bot_api.push_message(uid, TextSendMessage("請稍等..."))
+            import schedule
+            import time
+            #查看當前股價
+            def look_stock_price(stock, condition, price, userID):
+                print(userID)
+                url = "https://tw.stock.yahoo.com/q/q?s=" + stock
+                list_req = request.get(url)
+                soup = BeautifulSoup(list_req.content, "html.parser")
+                getstock = soup.findAll('b')[1].text
+                content = stock + "當前股市價格為:" + getstock
+                if condition == '<':
+                    content += "\n篩選條件為: <" + price
+                    if float(getstock) < float(price):
+                        content += "\n符合" + getstock + "<" + price + "的篩選條件"
+                        line_bot_api.push_message(userID, TextSendMessage(text = content))
+                elif condition == '>':
+                    content += "\n篩選條件為: >" + price
+                    if float(getstock) > float(price):
+                        content += "\n符合" + getstock + ">" + price + "的篩選條件"
+                        line_bot_api.push_message(userID, TextSendMessage(text = content))
+                elif condition == '<':
+                    content += "\n篩選條件為: =" + price
+                    if float(getstock) == float(price):
+                        content += "\n符合" + getstock + "=" + price + "的篩選條件"
+                        line_bot_api.push_message(userID, TextSendMessage(text = content))
+            def job():
+                print('HH')
+                line_bot_api.push_message(uid, TextSendMessage("問就是直接ALL IN"))
+                dataList = cache_users_stock()
+                for i in range(len(dataList)):
+                    for k in range(len(dataList[i])):
+                        look_stock_price(dataList[i][k]['favorite_stock'], dataList[i][k]['condition'], dataList[i][k]['price'], dataList[i][k]['userID'])
+            schedule.every(5).seconds.do(job).tag('daily-tasks-stock' + uid, "second")
         
-        #查看當前股價
-    def look_stock_price(stock, condition, price, userID):
-        print(userID)
-        url = 'https://tw.stock.yahoo.com/q/q?s=' + stock
-        list_req = requests.get(url)
-        soup = BeautifulSoup(list_req.content, "html.parser")
-        getstock = soup.findAll('span')[11].text
-        content = stock +"當前股市價為: " +getstock
-        if condition == '<':
-            content += "\n篩選條件為: <" + price
-            if float(getstock) < float(price):
-                content += "\n符合" + getstock +"<" + price + "的篩選條件"
-                line_bot_api.push_message(userID, TextSendMessage(text=content))
-        elif condition == '>':
-            content += "\n篩選條件為: >" + price
-            if float(getstock) > float(price):
-                content += "\n符合" + getstock +">" + price + "的篩選條件"
-                line_bot_api.push_message(userID, TextSendMessage(text=content))
-        elif condition == '=':
-            content += "\n篩選條件為: =" + price
-            if float(getstock) == float(price):
-                content += "\n符合" + getstock +"=" + price + "的篩選條件"
-                line_bot_api.push_message(userID, TextSendMessage(text=content))
-    def job():
-        print('HH')
-        line_bot_api.push_message(uid, TextSendMessage("快買股票喔!"))
-        dataList = cache_users_stock()
-        #print(dataList)
-        for i in range(len(dataList)):
-            for k in range(len(dataList[i])):
-                #print(dataList[i][k])
-                look_stock_price(dataList[i][k]['favorite_stock'], dataList[i][k]['condition'], dataList[i][k]['price'], dataList[i][k]['userID'])
-    schedule.every(30).seconds.do(job).tag('daily-task-stock'+uid, 'second') #每30秒執行一次
+            while True:
+                schedule.run_pending()
+                time.sleep(1)
+##########################################
+    # if re.match("關閉提醒", msg):
+    #     import schedule
+    #     schedule.clear()
+    # if re.match("股價提醒", msg):
+    #     import  schedule
+    #     import time
+        
+    #     #查看當前股價
+    #     def look_stock_price(stock, condition, price, userID):
+    #         print(userID)
+    #         url = 'https://tw.stock.yahoo.com/q/q?s=' + stock
+    #         list_req = requests.get(url)
+    #         soup = BeautifulSoup(list_req.content, "html.parser")
+    #         getstock = soup.findAll('span')[11].text
+    #         content = stock +"當前股市價為: " +getstock
+    #         if condition == '<':
+    #             content += "\n篩選條件為: <" + price
+    #             if float(getstock) < float(price):
+    #                 content += "\n符合" + getstock +"<" + price + "的篩選條件"
+    #                 line_bot_api.push_message(userID, TextSendMessage(text=content))
+    #         elif condition == '>':
+    #             content += "\n篩選條件為: >" + price
+    #             if float(getstock) > float(price):
+    #                 content += "\n符合" + getstock +">" + price + "的篩選條件"
+    #                 line_bot_api.push_message(userID, TextSendMessage(text=content))
+    #         elif condition == '=':
+    #             content += "\n篩選條件為: =" + price
+    #             if float(getstock) == float(price):
+    #                 content += "\n符合" + getstock +"=" + price + "的篩選條件"
+    #                 line_bot_api.push_message(userID, TextSendMessage(text=content))
+    # def job():
+    #     print('HH')
+    #     line_bot_api.push_message(uid, TextSendMessage("快買股票喔!"))
+    #     dataList = cache_users_stock()
+    #     #print(dataList)
+    #     for i in range(len(dataList)):
+    #         for k in range(len(dataList[i])):
+    #             #print(dataList[i][k])
+    #             look_stock_price(dataList[i][k]['favorite_stock'], dataList[i][k]['condition'], dataList[i][k]['price'], dataList[i][k]['userID'])
+    # schedule.every(30).seconds.do(job).tag('daily-task-stock'+uid, 'second') #每30秒執行一次
     #schedule.every().hour.do(job) #每小時執行一次
     #schedule.every().day.at("17:19").do(job) #每天9點30執行一次
     #schedule.every().monday.do(job) #每周執行一次
     #schedule.every().wednesday.at("14:45").do(job) #每周三14點45執行一次
     #無窮迴圈
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    # while True:
+    #     schedule.run_pending()
+    #     time.sleep(1)
 ############################ 粉絲/封鎖 訊息狀態 ############################
 
 @handler.add(FollowEvent)
