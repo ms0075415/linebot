@@ -139,6 +139,21 @@ def handle_message(event):
                 event.reply_token,
                 TextSendMessage(text=content)
             )
+############################ 匯率區 ############################
+    if re.match('幣別種類', emsg):
+        message = show_Button()
+        line_bot_api.reply_message(event.reply_token, message)
+
+    if re.match('[A-Z]{3}', msg):  #if re.match('查詢匯率[A-Z]{3}', msg):
+        msg = msg[::]               #msg = msg[4:]
+        content = showCurrency(msg)
+        line_bot_api.push_message(uid, TextSendMessage(content))
+
+    if re.match("換匯[A-Z]{3}/[A-Z{3}]",msg):
+        line_bot_api.push_message(uid,TextSendMessage("將為您做外匯計算...."))
+        content = getExchangeRate(msg)
+        line_bot_api.push_message(uid, TextSendMessage(content))
+        
 ############################ 股價提醒 ############################
     if re.match("關閉提醒", msg):
         import schedule
@@ -188,22 +203,6 @@ def handle_message(event):
     while True:
         schedule.run_pending()
         time.sleep(1)
-
-############################ 匯率區 ############################
-        if re.match('幣別種類', emsg):
-            message = show_Button()
-            line_bot_api.reply_message(event.reply_token, message)
-
-        if re.match('[A-Z]{3}', msg):  #if re.match('查詢匯率[A-Z]{3}', msg):
-            msg = msg[::]               #msg = msg[4:]
-            content = showCurrency(msg)
-            line_bot_api.push_message(uid, TextSendMessage(content))
-
-        if re.match("換匯[A-Z]{3}/[A-Z{3}]",msg):
-            line_bot_api.push_message(uid,TextSendMessage("將為您做外匯計算...."))
-            content = getExchangeRate(msg)
-            line_bot_api.push_message(uid, TextSendMessage(content))
-
 ############################ 粉絲/封鎖 訊息狀態 ############################
 
 @handler.add(FollowEvent)
