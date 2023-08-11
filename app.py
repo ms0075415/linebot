@@ -8,6 +8,7 @@ from model.mongodb import *
 import re
 import twstock
 import datetime
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
@@ -140,9 +141,13 @@ def handle_message(event):
                 TextSendMessage(text=content)
             )
 ############################ 股價提醒 ############################
+    if re.match("關閉提醒", msg):
+        import schedule
+        schedule.clear()
     if re.match("股價提醒", msg):
         import  schedule
         import time
+        
         #查看當前股價
         def look_stock_price(stock, condition, price, userID):
             print(userID)
