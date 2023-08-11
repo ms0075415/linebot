@@ -54,7 +54,7 @@ def show_stock_setting(user_name, userID):
 def delete_my_stock(user_name, stockNumber):
     db = constructor_stock()
     collect = db[user_name]
-    collect.dele_one({'favorite_stock': stockNumber})
+    collect.delete_one({'favorite_stock': stockNumber})
     return stockNumber + "刪除成功"
 
 #   -----------    刪除使用者股票清單內所有的股票       -------------
