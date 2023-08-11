@@ -8,6 +8,7 @@ from model.mongodb import *
 import re
 import twstock
 import datetime
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
@@ -153,7 +154,7 @@ def handle_message(event):
         line_bot_api.push_message(uid,TextSendMessage("將為您做外匯計算...."))
         content = getExchangeRate(msg)
         line_bot_api.push_message(uid, TextSendMessage(content))
-        
+
 ############################ 股價提醒 ############################
     if re.match("關閉提醒", msg):
         import schedule
