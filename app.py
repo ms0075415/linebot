@@ -8,7 +8,6 @@ from model.mongodb import *
 import re
 import twstock
 import datetime
-from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
