@@ -114,6 +114,7 @@ def handle_message(event):
 
     if re.match('查詢匯率[A-Z]{3}', msg):
         msg = msg[4:]
+        content = showCurrency(msg)
         line_bot_api.push_message(uid, TextSendMessage(content))
 
     if re.match("換匯[A-Z]{3}/[A-Z{3}]",msg):
