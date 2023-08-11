@@ -112,8 +112,8 @@ def handle_message(event):
         message = show_Button()
         line_bot_api.reply_message(event.reply_token, message)
 
-    if re.match('查詢匯率[A-Z]{3}', msg):
-        msg = msg[4:]
+    if re.match('[A-Z]{3}', msg):
+        msg = msg[::]
         content = showCurrency(msg)
         line_bot_api.push_message(uid, TextSendMessage(content))
 
