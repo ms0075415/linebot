@@ -61,6 +61,10 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
+    if message_text == '使用說123':
+        about_us_event(event)
+        Usage(event)
+
         
 ############################ 使用說明 選單 股票看板 ############################
     if event.message.text == "股價查詢":
